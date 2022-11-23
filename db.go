@@ -3,13 +3,24 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
+var dsn string
+
+func init() {
+	dsn = "./pollen.db"
+
+	if connStr, ok := os.LookupEnv("DATABASE_URL"); ok {
+		dsn = connStr
+	}
+}
+
 func prepareDB() error {
-	db, err := sql.Open("sqlite3", "./pollen.db")
+	db, err := sql.Open("sqlite3", dsn)
 	if err != nil {
 		return err
 	}
@@ -38,7 +49,7 @@ create table if not exists thunderstorm_asthma (
 }
 
 func insertForecast(f Forecast) error {
-	db, err := sql.Open("sqlite3", "./pollen.db")
+	db, err := sql.Open("sqlite3", dsn)
 	if err != nil {
 		return err
 	}
@@ -88,7 +99,7 @@ func insertForecast(f Forecast) error {
 }
 
 func selectForecast(date time.Time) (f Forecast, err error) {
-	db, err := sql.Open("sqlite3", "./pollen.db")
+	db, err := sql.Open("sqlite3", dsn)
 	if err != nil {
 		return f, err
 	}
@@ -163,7 +174,7 @@ func selectForecast(date time.Time) (f Forecast, err error) {
 }
 
 func latestEntry() (t time.Time, err error) {
-	db, err := sql.Open("sqlite3", "./pollen.db")
+	db, err := sql.Open("sqlite3", dsn)
 	if err != nil {
 		return t, err
 	}
