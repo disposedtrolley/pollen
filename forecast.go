@@ -50,24 +50,24 @@ const (
 )
 
 type Forecast struct {
-	Date               time.Time
-	ThunderstormAsthma []ThunderstormAsthma
-	Pollen             []Pollen
+	Date               time.Time            `json:"date"`
+	ThunderstormAsthma []ThunderstormAsthma `json:"thunderstormAsthma"`
+	Pollen             []Pollen             `json:"pollen"`
 }
 
 type ThunderstormAsthma struct {
-	Region   string
-	Severity string
+	Region   string `json:"region"`
+	Severity string `json:"severity"`
 }
 
 type Pollen struct {
-	Site       string
-	Severities []PollenSeverity
+	Site       string           `json:"site"`
+	Severities []PollenSeverity `json:"severities"`
 }
 
 type PollenSeverity struct {
-	Type     PollenType
-	Severity Severity
+	Type     PollenType `json:"type"`
+	Severity Severity   `json:"severity"`
 }
 
 type AppData struct {
