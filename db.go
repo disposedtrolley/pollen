@@ -15,19 +15,11 @@ func prepareDB() error {
 	defer db.Close()
 
 	schema := `
-create table if not exists pollen_sites (
-    id integer primary key,
-    name text
-);
-
 create table if not exists pollen (
-    site integer,
+    site text,
     type text,
     severity text,
-    timestamp date,
-                                  
-    foreign key (site)
-    	references pollen_sites(id)
+    timestamp date
 );
 
 create table if not exists thunderstorm_asthma (
@@ -38,27 +30,6 @@ create table if not exists thunderstorm_asthma (
 `
 
 	if _, err = db.Exec(schema); err != nil {
-		return err
-	}
-
-	tx, err := db.Begin()
-	if err != nil {
-		return err
-	}
-	stmt, err := tx.Prepare("insert or ignore into pollen_sites(id, name) values(?, ?)")
-	if err != nil {
-		return err
-	}
-	defer stmt.Close()
-
-	for siteID, siteName := range Sites {
-		if _, err = stmt.Exec(siteID, siteName); err != nil {
-			return err
-		}
-	}
-
-	err = tx.Commit()
-	if err != nil {
 		return err
 	}
 
@@ -114,6 +85,38 @@ func insertForecast(f Forecast) error {
 
 	return nil
 }
+
+//func selectForecast(date time.Time) (f Forecast, err error) {
+//	db, err := sql.Open("sqlite3", "./pollen.db")
+//	if err != nil {
+//		return f, err
+//	}
+//	defer db.Close()
+//
+//	y, m, d := date.Date()
+//	dateString := fmt.Sprintf("%d-%d-%d", y, m, d)
+//
+//	rows, err := db.Query("")
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//	defer rows.Close()
+//	for rows.Next() {
+//		var id int
+//		var name string
+//		err = rows.Scan(&id, &name)
+//		if err != nil {
+//			log.Fatal(err)
+//		}
+//		fmt.Println(id, name)
+//	}
+//	err = rows.Err()
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//
+//	return f, nil
+//}
 
 func latestEntry() (t time.Time, err error) {
 	db, err := sql.Open("sqlite3", "./pollen.db")

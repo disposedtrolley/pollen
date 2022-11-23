@@ -61,7 +61,7 @@ type ThunderstormAsthma struct {
 }
 
 type Pollen struct {
-	Site       int
+	Site       string
 	Severities []PollenSeverity
 }
 
@@ -193,7 +193,7 @@ func getAllPollen() (forecast []Pollen, err error) {
 		if err != nil {
 			return forecast, err
 		}
-		f.Site = siteID
+		f.Site = siteName
 		forecast = append(forecast, f)
 
 		log.Println("Done.")
