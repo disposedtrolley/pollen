@@ -2,7 +2,10 @@ module sr.ht/disposedtrolley/pollen
 
 go 1.19
 
-require github.com/antchfx/htmlquery v1.2.5
+require (
+	github.com/antchfx/htmlquery v1.2.5
+	github.com/mattn/go-sqlite3 v1.14.16
+)
 
 require (
 	github.com/antchfx/xpath v1.2.1 // indirect

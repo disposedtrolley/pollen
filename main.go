@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -202,26 +201,32 @@ func getAllPollen() (forecast []Pollen, err error) {
 	return forecast, nil
 }
 
-func main() {
+func getForecast() (forecast Forecast, err error) {
 	log.Println("Getting thunderstorm asthma forecast...")
 	thunderstormAsthma, err := getThunderstormAsthma()
 	if err != nil {
-		log.Fatal(err)
+		return forecast, err
 	}
 	log.Println("Done.")
 
 	log.Println("Getting pollen forecasts...")
 	pollen, err := getAllPollen()
 	if err != nil {
-		log.Fatal(err)
+		return forecast, err
 	}
 	log.Println("Done.")
 
-	forecast := Forecast{
+	forecast = Forecast{
 		Date:               time.Now().UTC(),
 		ThunderstormAsthma: thunderstormAsthma,
 		Pollen:             pollen,
 	}
 
-	fmt.Println(forecast)
+	return forecast, nil
+}
+
+func main() {
+	if err := prepareDB(); err != nil {
+		log.Fatal(err)
+	}
 }
