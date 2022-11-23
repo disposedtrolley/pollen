@@ -9,6 +9,8 @@ import (
 )
 
 func serveForecast(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	if err := forecast(); err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
