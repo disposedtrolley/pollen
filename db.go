@@ -62,3 +62,53 @@ create table if not exists thunderstorm_asthma (
 
 	return nil
 }
+
+func insertForecast(f Forecast) error {
+	db, err := sql.Open("sqlite3", "./pollen.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	// Pollen
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	stmt, err := tx.Prepare("insert into pollen(site, type, severity, timestamp) values(?, ?, ?, ?)")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	for _, pollenForecast := range f.Pollen {
+		for _, severity := range pollenForecast.Severities {
+			if _, err = stmt.Exec(pollenForecast.Site, severity.Type, severity.Severity, f.Date); err != nil {
+				return err
+			}
+		}
+	}
+	if err := tx.Commit(); err != nil {
+		return err
+	}
+
+	// Thunderstorm Asthma
+	tx, err = db.Begin()
+	if err != nil {
+		return err
+	}
+	stmt, err = tx.Prepare("insert into thunderstorm_asthma(region, severity, timestamp) values(?, ?, ?)")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	for _, asthmaForecast := range f.ThunderstormAsthma {
+		if _, err = stmt.Exec(asthmaForecast.Region, asthmaForecast.Severity, f.Date); err != nil {
+			return err
+		}
+	}
+	if err := tx.Commit(); err != nil {
+		return err
+	}
+
+	return nil
+}

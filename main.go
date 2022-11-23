@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -16,15 +17,15 @@ const (
 	dataAcquisitionUrl = "https://api.pollenforecast.com.au/app/json/data_acquisition.php?app=1&version=4"
 )
 
-var Sites = map[string]string{
-	"1":  "melbourne",
-	"5":  "dookie",
-	"6":  "bendigo",
-	"7":  "creswick",
-	"8":  "hamilton",
-	"9":  "churchill",
-	"15": "burwood",
-	"16": "geelong",
+var Sites = map[int]string{
+	1:  "melbourne",
+	5:  "dookie",
+	6:  "bendigo",
+	7:  "creswick",
+	8:  "hamilton",
+	9:  "churchill",
+	15: "burwood",
+	16: "geelong",
 }
 
 type PollenType string
@@ -60,7 +61,7 @@ type ThunderstormAsthma struct {
 }
 
 type Pollen struct {
-	Region     string
+	Site       int
 	Severities []PollenSeverity
 }
 
@@ -118,8 +119,8 @@ func getThunderstormAsthma() (forecast []ThunderstormAsthma, err error) {
 	return forecast, nil
 }
 
-func getPollen(siteID string) (forecast Pollen, err error) {
-	resp, err := http.Get(dataAcquisitionUrl + "&site_id=" + string(siteID))
+func getPollen(siteID int) (forecast Pollen, err error) {
+	resp, err := http.Get(fmt.Sprintf("%s&site_id=%d", dataAcquisitionUrl, siteID))
 	if err != nil {
 		return forecast, err
 	}
@@ -192,10 +193,11 @@ func getAllPollen() (forecast []Pollen, err error) {
 		if err != nil {
 			return forecast, err
 		}
-		f.Region = siteName
+		f.Site = siteID
 		forecast = append(forecast, f)
 
 		log.Println("Done.")
+		time.Sleep(1 * time.Second)
 	}
 
 	return forecast, nil
@@ -227,6 +229,15 @@ func getForecast() (forecast Forecast, err error) {
 
 func main() {
 	if err := prepareDB(); err != nil {
+		log.Fatal(err)
+	}
+
+	forecast, err := getForecast()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := insertForecast(forecast); err != nil {
 		log.Fatal(err)
 	}
 }
