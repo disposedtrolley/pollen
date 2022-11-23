@@ -1,0 +1,458 @@
+<div class="bg-img">
+  <!--grass forecast block-->
+  <div id="pollenCount" class="lateral-bar bar-pollen-high card">
+    <div class="title-forecast-today"
+      style="padding-left: 0px !important;padding-top: 0px !important;padding-bottom: 0px !important;">
+      <p style="text-align: center;font-size:28px;font-weight: bold;margin: 0px;line-height:28px;"
+        class="title-forecast-today">Hamilton Grass Pollen Forecast</p>
+    </div>
+    <div class="date-forecast-today"
+      style="padding-left: 0px !important;padding-top: 0px !important;padding-bottom: 0px !important;">
+      <p style="text-align: center;font-size:18px;margin: 0px;" class="date-forecast-today">23 November 2022</p>
+    </div>
+    <div style="padding-top: 0px; padding-bottom: 0px;">
+      <div id="chart"></div>
+    </div>
+    <div class="uk-flex uk-flex-center block-level-high">
+      <div style="color: white !important;font-size: 28px;font-weight: bold;">HIGH</div>
+    </div>
+  </div>
+  <!--grass forecast block-->
+  <div id="pro_feature" class="free_feature">
+    <div style="padding-bottom:15px;"><a href="#"
+        onclick="NAC_1940x500();window.open('https://www.sensitivechoice.com/?utm_source=pollenpartnerwebsite&utm_medium=website&utm_campaign=PollenCampaign22', '_system');"
+        class="ui-link"><img width="100%" src="https://api.pollenforecast.com.au/assets/NAC/NAC_1940x500.jpg"
+          alt="Sensitive Choice"></a></div>
+  </div>
+  <!--visible-to-pro-subscribers-->
+  <div id="pro_feature" class="pro_feature" hidden>
+    <div id="other_forecasts" class="card">
+      <div
+        style="padding: 1.25rem !important;text-align: left !important;color: #1976d2 !important;font-weight: normal !important;font-size: 1.5rem !important;text-transform: capitalize !important;text-shadow: none !important;padding-left: 1rem;">
+        Other Forecasts </div>
+      <div>
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="center: true">
+          <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-4@m uk-grid"
+            style="padding:0px 30px 30px 30px;">
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Cypress" uk-toggle>Cypress <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !importantborder: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important;">
+                    Low</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Myrtle" uk-toggle>Myrtle <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !importantborder: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important;">
+                    Low</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Olive" uk-toggle>Olive <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !importantborder: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important;">
+                    Low</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Plane" uk-toggle>Plane <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !importantborder: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important;">
+                    Low</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Alternaria" uk-toggle>Alternaria <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(mould spores)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !importantborder: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important;">
+                    Low</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Plantain" uk-toggle>Plantain <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(weed pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !importantborder: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important;">
+                    Low</div>
+                </div>
+              </div>
+            </li>
+          </ul> <a style="color: black !important" class="uk-position-center-left uk-position-small " href="#"
+            uk-slidenav-previous uk-slider-item="previous"></a> <a style="color: black !important"
+            class="uk-position-center-right uk-position-small " href="#" uk-slidenav-next uk-slider-item="next"></a>
+        </div>
+        <div style="padding:10px;">Swipe to reveal forecasts for additional aeroallergens.</div>
+      </div>
+    </div>
+  </div>
+  <!--visible-to-pro-subscribers-->
+  <!--profeatures-notsubscribed-->
+  <div id="pro_feature" class="free_feature enable_purchase" hidden>
+    <div id="other_forecasts" class="card">
+      <div
+        style="padding: 1.25rem !important;text-align: left !important;color: #1976d2 !important;font-weight: normal !important;font-size: 1.5rem !important;text-transform: capitalize !important;text-shadow: none !important;padding-left: 1rem;">
+        Other Forecasts </div>
+      <div>
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="center: true">
+          <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-4@m uk-grid"
+            style="padding:0px 30px 30px 30px;">
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: grey !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Cypress" uk-toggle>Cypress <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: grey !important;color: white !important;border: 1px solid grey;font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                    Available To Supporters</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: grey !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Myrtle" uk-toggle>Myrtle <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: grey !important;color: white !important;border: 1px solid grey;font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                    Available To Supporters</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: grey !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Olive" uk-toggle>Olive <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: grey !important;color: white !important;border: 1px solid grey;font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                    Available To Supporters</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: grey !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Plane" uk-toggle>Plane <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(tree pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: grey !important;color: white !important;border: 1px solid grey;font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                    Available To Supporters</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: grey !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Alternaria" uk-toggle>Alternaria <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(mould spores)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: grey !important;color: white !important;border: 1px solid grey;font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                    Available To Supporters</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="other_card_wrapper" style="height:90px;">
+                <div class="card"
+                  style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: grey !important; border-top: 0.5rem solid;">
+                  <div style="line-height: 60px; height: 60px;">
+                    <div
+                      style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: normal !important;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                      <a style="color: black !important" href="#modal-Plantain" uk-toggle>Plantain <img
+                          src="img/noun_Information_2119887.svg" width="20" height="20" uk-svg></a>
+                      <div class="uk-text-center" style="font-size: 14px;">(weed pollen)</div>
+                    </div>
+                  </div>
+                  <div
+                    style="padding:5px;background-color: grey !important;color: white !important;border: 1px solid grey;font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                    Available To Supporters</div>
+                </div>
+              </div>
+            </li>
+          </ul> <a style="color: black !important" class="uk-position-center-left uk-position-small " href="#"
+            uk-slidenav-previous uk-slider-item="previous"></a> <a style="color: black !important"
+            class="uk-position-center-right uk-position-small " href="#" uk-slidenav-next uk-slider-item="next"></a>
+        </div>
+        <div style="padding:10px;">Swipe to reveal forecasts for additional aeroallergens.</div>
+      </div>
+    </div>
+  </div>
+  <!--profeatures-notsubscribed-->
+  <!--visible-to-pro-subscribers-->
+  <div id="pro_feature" class="pro_feature" hidden>
+    <!--airquality-->
+    <div id="airquality_container" class="card">
+      <div
+        style="padding: 1.25rem !important;text-align: left !important;color: #1976d2 !important;font-weight: normal !important;font-size: 1.5rem !important;text-transform: capitalize !important;text-shadow: none !important;padding-left: 1rem;padding-bottom: 0px !important;">
+        Melbourne Air quality</div>
+      <div>
+        <div class="uk-slider uk-slider-container" uk-slider>
+          <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+            <ul class="uk-slider-items uk-child-width-1-2@s uk-grid">
+              <li>
+                <div style="padding: 0px !important;">
+                  <p
+                    style="text-align: center; font-size: 18px; margin: 0px; padding-bottom: 20px !important; padding-left: 20px !important;">
+                    Hamilton Station</p>
+                </div>
+                <div style="height:90px;">
+                  <div class="card"
+                    style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid; width:80%; margin-left: auto; margin-right:auto; ">
+                    <div style="line-height: 60px; height: 60px;">
+                      <div
+                        style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: 700;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                        Air Quality</div>
+                    </div>
+                    <div
+                      style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !important;border: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                      Good</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div style="padding: 0px !important;">
+                  <p
+                    style="text-align: center; font-size: 18px; margin: 0px; padding-bottom: 20px !important; padding-left: 20px !important;">
+                    Heywood Station</p>
+                </div>
+                <div style="height:90px;">
+                  <div class="card"
+                    style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid; width:80%; margin-left: auto; margin-right:auto; ">
+                    <div style="line-height: 60px; height: 60px;">
+                      <div
+                        style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: 700;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                        Air Quality</div>
+                    </div>
+                    <div
+                      style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !important;border: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                      Good</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div style="padding: 0px !important;">
+                  <p
+                    style="text-align: center; font-size: 18px; margin: 0px; padding-bottom: 20px !important; padding-left: 20px !important;">
+                    Portland Station</p>
+                </div>
+                <div style="height:90px;">
+                  <div class="card"
+                    style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid; width:80%; margin-left: auto; margin-right:auto; ">
+                    <div style="line-height: 60px; height: 60px;">
+                      <div
+                        style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: 700;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                        Air Quality</div>
+                    </div>
+                    <div
+                      style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !important;border: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                      Good</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <ul class="uk-slider-nav uk-dotnav uk-flex-center" style="margin-top: 20px; "></ul>
+        </div>
+        <div style="padding:10px; text-align: left !important;" class="uk-text-small"> <span
+            style="text-decoration: underline;">Note:</span> Air quality information provided by the Environment
+          Protection Authority Victoria. Visit EPA AirWatch for more. </div>
+      </div>
+    </div>
+    <!--airquality-->
+  </div>
+  <!--visible-to-pro-subscribers-->
+  <div id="pro_feature" class="free_feature">
+    <div id="airquality_container" class="card">
+      <div
+        style="padding: 1.25rem !important;text-align: left !important;color: #1976d2 !important;font-weight: normal !important;font-size: 1.5rem !important;text-transform: capitalize !important;text-shadow: none !important;padding-left: 1rem;padding-bottom: 0px !important;">
+        Melbourne Air quality</div>
+      <div>
+        <div class="uk-slider uk-slider-container" uk-slider>
+          <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+            <ul class="uk-slider-items uk-child-width-1-2@s uk-grid">
+              <li>
+                <div style="padding: 0px !important;">
+                  <p
+                    style="text-align: center; font-size: 18px; margin: 0px; padding-bottom: 20px !important; padding-left: 20px !important;">
+                    Hamilton Station</p>
+                </div>
+                <div style="height:90px;">
+                  <div class="card"
+                    style="border: solid;border-width: 1px;border-color: lightgrey;margin: 10px;border-top-color: var(--pollen-low-color) !important; border-top: 0.5rem solid; width:80%; margin-left: auto; margin-right:auto; ">
+                    <div style="line-height: 60px; height: 60px;">
+                      <div
+                        style="line-height: 1.5; display: inline-block;vertical-align: middle;text-align: center !important;color: black !important;font-weight: 700;font-size: 1.2rem !important;text-transform: capitalize !important;text-shadow: none !important; width: 100%;">
+                        Air Quality</div>
+                    </div>
+                    <div
+                      style="padding:5px;background-color: var(--pollen-low-color) !important;color: white !important;border: 1px solid var(--pollen-low-color);font-weight: bold !important;text-align: center !important; text-shadow: none !important;">
+                      Good</div>
+                  </div>
+              <li class="enable_purchase" hidden>
+                <div class="uk-background-cover enable_purchase"
+                  style="margin: 12px;background-image: url(img/cars-2979931_1920.jpg);border: 1px solid;padding: 10px;border-color: grey;">
+                  <div class="uk-height-1-1" style="background: rgba(255, 255, 255, 0.5);padding: 10px;">
+                    <div class="uk-flex uk-flex-middle uk-text-center uk-height-1-1">
+                      <div class="uk-align-center uk-margin-remove">
+                        <div class="uk-text-bold"
+                          style="margin: 0px;font-size: 20px; padding-top: 10px;padding-bottom: 10px;">Need more Air
+                          Quality Data?</div>
+                        <div class="" style="margin: 0px;font-size: 17px; padding-top: 10px;padding-bottom: 15px;">Your
+                          subscription not only helps to fund our research, it also gives you more information to help
+                          manage your symptoms.</div><a onclick="AirPurchaseModalOpened();"
+                          class="uk-width-1-1 uk-button uk-button-default uk-button-primary ui-link"
+                          href="#modal-subscribe" style="background-color:#1e87f0 !important;" uk-toggle=""
+                          aria-expanded="false">
+                          <div
+                            style="color: white !important;text-shadow: none !important;text-align: center !important;">
+                            Learn More</div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <ul class="uk-slider-nav uk-dotnav uk-flex-center" style="padding-bottom: 20px; margin-bottom: 10px"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="title-weather-today">Hamilton Weather</div>
+    <div class="wether-forecast-wrap">
+      <div class="weather-d1">
+        <div class="Weather-divTable">
+          <div class="Weather-divTableBody">
+            <div class="Weather-divTableRow">
+              <div class="Weather-divTableCell">
+                <div class="weather-image"><img class="weather-icon"
+                    src="http://api.pollenforecast.com.au/app/assets/icons/graphic11.png"></div>
+                <div>
+                  <div class="Weather-divTableCell">
+                    <div class="weather-left-top">
+                      <div class="weather-max-temp-text">Max: <span class"Weather-max-temp">17</span><sup>o</sup>C</div>
+                      <div class="weather-precise-text">Shower or two.</div>
+                    </div>
+                    <div class="weather-left-bottom">
+                      <div class="weather-posibility-rain-text">Possibility of Rain: <span
+                          class"Weather-rain">60%</span></div>
+                    </div>
+                  </div>
+                  <div class="Weather-divTableRow">
+                    <div class="Weather-divTableCell">
+                      <div class="weather-forecast-text">Cloudy. Medium chance of showers. Winds westerly 15 to 25 km/h
+                        tending southwesterly in the late afternoon then becoming light in the evening.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr style="margin: 0px;">
+          <div class="Weather-divTableBody">
+            <div class="Weather-divTableRow"></div>
+          </div>
+        </div>
+      </div>
