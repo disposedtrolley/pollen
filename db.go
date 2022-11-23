@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"time"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -111,4 +113,21 @@ func insertForecast(f Forecast) error {
 	}
 
 	return nil
+}
+
+func latestEntry() (t time.Time, err error) {
+	db, err := sql.Open("sqlite3", "./pollen.db")
+	if err != nil {
+		return t, err
+	}
+	defer db.Close()
+
+	var timestamp time.Time
+	row := db.QueryRow("select timestamp from pollen order by timestamp desc limit 1")
+
+	if err := row.Scan(&timestamp); err != nil {
+		return t, err
+	}
+
+	return timestamp, nil
 }

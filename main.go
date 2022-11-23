@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -227,9 +228,32 @@ func getForecast() (forecast Forecast, err error) {
 	return forecast, nil
 }
 
+func isToday(t time.Time) bool {
+	tLocal := t.Local()
+	tNow := time.Now().Local()
+
+	y1, m1, d1 := tLocal.Date()
+	y2, m2, d2 := tNow.Date()
+
+	return y1 == y2 && m1 == m2 && d1 == d2
+}
+
 func main() {
 	if err := prepareDB(); err != nil {
 		log.Fatal(err)
+	}
+
+	lastEntryDate, err := latestEntry()
+	if err != nil {
+		// Continue if the DB is empty.
+		if err != sql.ErrNoRows {
+			log.Fatal(err)
+		}
+	}
+
+	if isToday(lastEntryDate) {
+		log.Println("Already populated today's forecast. Stopping.")
+		return
 	}
 
 	forecast, err := getForecast()
@@ -237,7 +261,9 @@ func main() {
 		log.Fatal(err)
 	}
 
+	log.Println("Inserting forecast data...")
 	if err := insertForecast(forecast); err != nil {
 		log.Fatal(err)
 	}
+	log.Println("Done.")
 }
