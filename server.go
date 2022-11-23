@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -27,6 +28,11 @@ func serveForecast(w http.ResponseWriter, r *http.Request) {
 }
 
 func serve() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	http.HandleFunc("/", serveForecast)
-	log.Fatal(http.ListenAndServe(":4321", nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
