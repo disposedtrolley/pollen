@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -86,37 +87,80 @@ func insertForecast(f Forecast) error {
 	return nil
 }
 
-//func selectForecast(date time.Time) (f Forecast, err error) {
-//	db, err := sql.Open("sqlite3", "./pollen.db")
-//	if err != nil {
-//		return f, err
-//	}
-//	defer db.Close()
-//
-//	y, m, d := date.Date()
-//	dateString := fmt.Sprintf("%d-%d-%d", y, m, d)
-//
-//	rows, err := db.Query("")
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	defer rows.Close()
-//	for rows.Next() {
-//		var id int
-//		var name string
-//		err = rows.Scan(&id, &name)
-//		if err != nil {
-//			log.Fatal(err)
-//		}
-//		fmt.Println(id, name)
-//	}
-//	err = rows.Err()
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//
-//	return f, nil
-//}
+func selectForecast(date time.Time) (f Forecast, err error) {
+	db, err := sql.Open("sqlite3", "./pollen.db")
+	if err != nil {
+		return f, err
+	}
+	defer db.Close()
+
+	y, m, d := date.Date()
+	dateString := fmt.Sprintf("%d-%d-%d", y, m, d)
+
+	// Pollen
+	for _, siteName := range Sites {
+		pollenForSite := Pollen{
+			Site: siteName,
+		}
+
+		stmt, err := db.Prepare("select type, severity, timestamp from pollen where date(timestamp) == ? and site == ?")
+		if err != nil {
+			return f, err
+		}
+		defer stmt.Close()
+
+		rows, err := stmt.Query(dateString, siteName)
+		if err != nil {
+			return f, err
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var pollenSeverity PollenSeverity
+			err = rows.Scan(&pollenSeverity.Type, &pollenSeverity.Severity, &f.Date)
+			if err != nil {
+				return f, err
+			}
+
+			pollenForSite.Severities = append(pollenForSite.Severities, pollenSeverity)
+		}
+		err = rows.Err()
+		if err != nil {
+			return f, err
+		}
+
+		f.Pollen = append(f.Pollen, pollenForSite)
+	}
+
+	// Thunderstorm Asthma
+	stmt, err := db.Prepare("select region, severity, timestamp from thunderstorm_asthma where date(timestamp) == ?")
+	if err != nil {
+		return f, err
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query(dateString)
+	if err != nil {
+		return f, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var asthma ThunderstormAsthma
+		err = rows.Scan(&asthma.Region, &asthma.Severity, &f.Date)
+		if err != nil {
+			return f, err
+		}
+
+		f.ThunderstormAsthma = append(f.ThunderstormAsthma, asthma)
+	}
+	err = rows.Err()
+	if err != nil {
+		return f, err
+	}
+
+	return f, nil
+}
 
 func latestEntry() (t time.Time, err error) {
 	db, err := sql.Open("sqlite3", "./pollen.db")

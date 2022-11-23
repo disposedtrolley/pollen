@@ -237,32 +237,34 @@ func isToday(t time.Time) bool {
 	return y1 == y2 && m1 == m2 && d1 == d2
 }
 
-func forecast() {
+func forecast() error {
 	if err := prepareDB(); err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	lastEntryDate, err := latestEntry()
 	if err != nil {
 		// Continue if the DB is empty.
 		if err != sql.ErrNoRows {
-			log.Fatal(err)
+			return err
 		}
 	}
 
 	if isToday(lastEntryDate) {
-		log.Println("Already populated today's forecast. Stopping.")
-		return
+		log.Println("Already populated today's forecast.")
+		return nil
 	}
 
 	forecast, err := getForecast()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	log.Println("Inserting forecast data...")
 	if err := insertForecast(forecast); err != nil {
-		log.Fatal(err)
+		return err
 	}
 	log.Println("Done.")
+
+	return nil
 }

@@ -1,13 +1,29 @@
 package main
 
 import (
-	"io"
+	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 )
 
 func serveForecast(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "This is my website!\n")
+	if err := forecast(); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	latestForecast, err := selectForecast(time.Now().UTC())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(latestForecast)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 }
 
 func serve() {
