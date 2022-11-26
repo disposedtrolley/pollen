@@ -19,26 +19,26 @@ const (
 )
 
 var Sites = map[int]string{
-	1:  "melbourne",
-	5:  "dookie",
-	6:  "bendigo",
-	7:  "creswick",
-	8:  "hamilton",
-	9:  "churchill",
-	15: "burwood",
-	16: "geelong",
+	1:  "Melbourne",
+	5:  "Dookie",
+	6:  "Bendigo",
+	7:  "Creswick",
+	8:  "Hamilton",
+	9:  "Churchill",
+	15: "Burwood",
+	16: "Geelong",
 }
 
 type PollenType string
 
 const (
-	PollenGrass          = "grass"
-	PollenTreeCypress    = "cypress"
-	PollenTreeMyrtle     = "myrtle"
-	PollenTreeOlive      = "olive"
-	PollenTreePlane      = "plane"
-	PollenTreeAlternaria = "alternaria"
-	PollenWeedPlantain   = "plantain"
+	PollenGrass          = "Grass"
+	PollenTreeCypress    = "Cypress"
+	PollenTreeMyrtle     = "Myrtle"
+	PollenTreeOlive      = "Olive"
+	PollenTreePlane      = "Plane"
+	PollenTreeAlternaria = "Alternaria"
+	PollenWeedPlantain   = "Plantain"
 )
 
 type Severity string
@@ -139,7 +139,7 @@ func getThunderstormAsthma() (forecast ThunderstormAsthma, err error) {
 		forecastRow := strings.Split(forecastText, "\n")
 
 		forecast.Predictions = append(forecast.Predictions, ThunderstormAsthmaPrediction{
-			Region:   strings.ToLower(strings.Trim(forecastRow[1], " ")),
+			Region:   strings.Trim(forecastRow[1], " "),
 			Severity: strings.ToLower(strings.Trim(forecastRow[3], " ")),
 		})
 	}
@@ -207,7 +207,7 @@ func getPollen(siteID int) (forecast PollenSite, err error) {
 			return forecast, err
 		}
 
-		pollenType := strings.ToLower(htmlquery.InnerText(pollenTypeAnchor))
+		pollenType := htmlquery.InnerText(pollenTypeAnchor)
 
 		pollenSeverityDiv, err := htmlquery.Query(f, "//div[2]")
 		if err != nil {

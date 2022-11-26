@@ -30,13 +30,13 @@ func prepareDB() error {
 create table if not exists pollen (
     site text,
     type text,
-    severity text,
+    forecast text,
     timestamp date
 );
 
 create table if not exists thunderstorm_asthma (
     region text,
-    severity text,
+    forecast text,
     timestamp date
 );
 `
@@ -60,7 +60,7 @@ func insertForecast(f Forecast) error {
 	if err != nil {
 		return err
 	}
-	stmt, err := tx.Prepare("insert into pollen(site, type, severity, timestamp) values(?, ?, ?, ?)")
+	stmt, err := tx.Prepare("insert into pollen(site, type, forecast, timestamp) values(?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
@@ -81,7 +81,7 @@ func insertForecast(f Forecast) error {
 	if err != nil {
 		return err
 	}
-	stmt, err = tx.Prepare("insert into thunderstorm_asthma(region, severity, timestamp) values(?, ?, ?)")
+	stmt, err = tx.Prepare("insert into thunderstorm_asthma(region, forecast, timestamp) values(?, ?, ?)")
 	if err != nil {
 		return err
 	}
@@ -114,7 +114,7 @@ func selectForecast(date time.Time) (f Forecast, err error) {
 			Site: siteName,
 		}
 
-		stmt, err := db.Prepare("select type, severity, timestamp from pollen where date(timestamp) == ? and site == ?")
+		stmt, err := db.Prepare("select type, forecast, timestamp from pollen where date(timestamp) == ? and site == ?")
 		if err != nil {
 			return f, err
 		}
@@ -144,7 +144,7 @@ func selectForecast(date time.Time) (f Forecast, err error) {
 	}
 
 	// Thunderstorm Asthma
-	stmt, err := db.Prepare("select region, severity, timestamp from thunderstorm_asthma where date(timestamp) == ?")
+	stmt, err := db.Prepare("select region, forecast, timestamp from thunderstorm_asthma where date(timestamp) == ?")
 	if err != nil {
 		return f, err
 	}
