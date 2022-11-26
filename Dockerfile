@@ -16,6 +16,8 @@ RUN go build
 
 FROM alpine:latest
 
+RUN apk add --no-cache tzdata
+
 WORKDIR /app
 
 COPY --from=build /app/pollen pollen
