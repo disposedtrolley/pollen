@@ -22,4 +22,4 @@ WORKDIR /app
 
 COPY --from=build /app/pollen pollen
 
-CMD ["./pollen", "server"]
+CMD ["./pollen", "tick"]
