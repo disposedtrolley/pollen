@@ -267,11 +267,13 @@ func getForecast() (forecast Forecast, err error) {
 }
 
 func isToday(t time.Time) bool {
-	tLocal := t.Local()
-	tNow := time.Now().Local()
+	tLocal := t.In(mustLocalTime())
+	now := time.Now().In(mustLocalTime())
 
-	y1, m1, d1 := tLocal.Date()
-	y2, m2, d2 := tNow.Date()
+	log.Printf("Comparing server time of %q to last entry time of %q", now, tLocal)
+
+	y1, m1, d1 := now.Date()
+	y2, m2, d2 := tLocal.Date()
 
 	return y1 == y2 && m1 == m2 && d1 == d2
 }
