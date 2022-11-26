@@ -65,9 +65,9 @@ func insertForecast(f Forecast) error {
 		return err
 	}
 	defer stmt.Close()
-	for _, pollenForecast := range f.Pollen {
-		for _, severity := range pollenForecast.Severities {
-			if _, err = stmt.Exec(pollenForecast.Site, severity.Type, severity.Severity, f.Date); err != nil {
+	for _, pollenSite := range f.Pollen.Sites {
+		for _, prediction := range pollenSite.Predictions {
+			if _, err = stmt.Exec(pollenSite.Site, prediction.Type, prediction.Severity, pollenSite.Date); err != nil {
 				return err
 			}
 		}
@@ -86,8 +86,8 @@ func insertForecast(f Forecast) error {
 		return err
 	}
 	defer stmt.Close()
-	for _, asthmaForecast := range f.ThunderstormAsthma {
-		if _, err = stmt.Exec(asthmaForecast.Region, asthmaForecast.Severity, f.Date); err != nil {
+	for _, asthmaForecast := range f.ThunderstormAsthma.Predictions {
+		if _, err = stmt.Exec(asthmaForecast.Region, asthmaForecast.Severity, f.ThunderstormAsthma.Date); err != nil {
 			return err
 		}
 	}
@@ -110,7 +110,7 @@ func selectForecast(date time.Time) (f Forecast, err error) {
 
 	// Pollen
 	for _, siteName := range Sites {
-		pollenForSite := Pollen{
+		pollenForSite := PollenSite{
 			Site: siteName,
 		}
 
@@ -127,20 +127,20 @@ func selectForecast(date time.Time) (f Forecast, err error) {
 		defer rows.Close()
 
 		for rows.Next() {
-			var pollenSeverity PollenSeverity
-			err = rows.Scan(&pollenSeverity.Type, &pollenSeverity.Severity, &f.Date)
+			var pollenPrediction PollenPrediction
+			err = rows.Scan(&pollenPrediction.Type, &pollenPrediction.Severity, &pollenForSite.Date)
 			if err != nil {
 				return f, err
 			}
 
-			pollenForSite.Severities = append(pollenForSite.Severities, pollenSeverity)
+			pollenForSite.Predictions = append(pollenForSite.Predictions, pollenPrediction)
 		}
 		err = rows.Err()
 		if err != nil {
 			return f, err
 		}
 
-		f.Pollen = append(f.Pollen, pollenForSite)
+		f.Pollen.Sites = append(f.Pollen.Sites, pollenForSite)
 	}
 
 	// Thunderstorm Asthma
@@ -157,13 +157,13 @@ func selectForecast(date time.Time) (f Forecast, err error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var asthma ThunderstormAsthma
-		err = rows.Scan(&asthma.Region, &asthma.Severity, &f.Date)
+		var asthma ThunderstormAsthmaPrediction
+		err = rows.Scan(&asthma.Region, &asthma.Severity, &f.ThunderstormAsthma.Date)
 		if err != nil {
 			return f, err
 		}
 
-		f.ThunderstormAsthma = append(f.ThunderstormAsthma, asthma)
+		f.ThunderstormAsthma.Predictions = append(f.ThunderstormAsthma.Predictions, asthma)
 	}
 	err = rows.Err()
 	if err != nil {

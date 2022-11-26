@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -50,22 +51,31 @@ const (
 )
 
 type Forecast struct {
-	Date               time.Time            `json:"date"`
-	ThunderstormAsthma []ThunderstormAsthma `json:"thunderstormAsthma"`
-	Pollen             []Pollen             `json:"pollen"`
+	ThunderstormAsthma ThunderstormAsthma `json:"thunderstormAsthma"`
+	Pollen             Pollen             `json:"pollen"`
 }
 
 type ThunderstormAsthma struct {
+	Date        time.Time                      `json:"date"`
+	Predictions []ThunderstormAsthmaPrediction `json:"predictions"`
+}
+
+type ThunderstormAsthmaPrediction struct {
 	Region   string `json:"region"`
 	Severity string `json:"severity"`
 }
 
 type Pollen struct {
-	Site       string           `json:"site"`
-	Severities []PollenSeverity `json:"severities"`
+	Sites []PollenSite `json:"sites"`
 }
 
-type PollenSeverity struct {
+type PollenSite struct {
+	Date        time.Time          `json:"date"`
+	Site        string             `json:"site"`
+	Predictions []PollenPrediction `json:"predictions"`
+}
+
+type PollenPrediction struct {
 	Type     PollenType `json:"type"`
 	Severity Severity   `json:"severity"`
 }
@@ -78,7 +88,16 @@ type DataAcquisition struct {
 	Result string `json:"result"`
 }
 
-func getThunderstormAsthma() (forecast []ThunderstormAsthma, err error) {
+func mustLocalTime() *time.Location {
+	location, err := time.LoadLocation("Australia/Melbourne")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return location
+}
+
+func getThunderstormAsthma() (forecast ThunderstormAsthma, err error) {
 	resp, err := http.Get(appDataUrl)
 	if err != nil {
 		return forecast, err
@@ -106,11 +125,20 @@ func getThunderstormAsthma() (forecast []ThunderstormAsthma, err error) {
 		return forecast, err
 	}
 
+	forecastTimestampP := htmlquery.FindOne(doc, "//div[3]/p")
+	re := regexp.MustCompile("Last updated: (.*);")
+	forecastTimestamp := re.FindStringSubmatch(htmlquery.InnerText(forecastTimestampP))[1]
+	t, err := time.ParseInLocation("2006-01-02 15:04:05", forecastTimestamp, mustLocalTime())
+	if err != nil {
+		return forecast, err
+	}
+	forecast.Date = t
+
 	for _, row := range rows {
 		forecastText := htmlquery.InnerText(row)
 		forecastRow := strings.Split(forecastText, "\n")
 
-		forecast = append(forecast, ThunderstormAsthma{
+		forecast.Predictions = append(forecast.Predictions, ThunderstormAsthmaPrediction{
 			Region:   strings.ToLower(strings.Trim(forecastRow[1], " ")),
 			Severity: strings.ToLower(strings.Trim(forecastRow[3], " ")),
 		})
@@ -119,7 +147,7 @@ func getThunderstormAsthma() (forecast []ThunderstormAsthma, err error) {
 	return forecast, nil
 }
 
-func getPollen(siteID int) (forecast Pollen, err error) {
+func getPollen(siteID int) (forecast PollenSite, err error) {
 	resp, err := http.Get(fmt.Sprintf("%s&site_id=%d", dataAcquisitionUrl, siteID))
 	if err != nil {
 		return forecast, err
@@ -141,12 +169,24 @@ func getPollen(siteID int) (forecast Pollen, err error) {
 		return forecast, err
 	}
 
+	// date
+	forecastDateP, err := htmlquery.Query(doc, "//p[@class='date-forecast-today']")
+	if err != nil {
+		return forecast, err
+	}
+	forecastTimestamp := htmlquery.InnerText(forecastDateP)
+	t, err := time.ParseInLocation("02 January 2006", forecastTimestamp, mustLocalTime())
+	if err != nil {
+		return forecast, err
+	}
+	forecast.Date = t
+
 	// grass
 	grassPollenDiv, err := htmlquery.Query(doc, "//div[@id='pollenCount']//div[4]")
 	if err != nil {
 		return forecast, err
 	}
-	forecast.Severities = append(forecast.Severities, PollenSeverity{
+	forecast.Predictions = append(forecast.Predictions, PollenPrediction{
 		Type:     PollenGrass,
 		Severity: Severity(strings.ToLower(htmlquery.InnerText(grassPollenDiv))),
 	})
@@ -176,7 +216,7 @@ func getPollen(siteID int) (forecast Pollen, err error) {
 
 		pollenSeverity := strings.ToLower(htmlquery.InnerText(pollenSeverityDiv))
 
-		forecast.Severities = append(forecast.Severities, PollenSeverity{
+		forecast.Predictions = append(forecast.Predictions, PollenPrediction{
 			Type:     PollenType(pollenType),
 			Severity: Severity(pollenSeverity),
 		})
@@ -185,16 +225,16 @@ func getPollen(siteID int) (forecast Pollen, err error) {
 	return forecast, err
 }
 
-func getAllPollen() (forecast []Pollen, err error) {
+func getAllPollen() (forecast Pollen, err error) {
 	for siteID, siteName := range Sites {
 		log.Printf("Getting pollen forecast for site %v (%s)...\n", siteID, siteName)
 
-		f, err := getPollen(siteID)
+		pollenSite, err := getPollen(siteID)
 		if err != nil {
 			return forecast, err
 		}
-		f.Site = siteName
-		forecast = append(forecast, f)
+		pollenSite.Site = siteName
+		forecast.Sites = append(forecast.Sites, pollenSite)
 
 		log.Println("Done.")
 		time.Sleep(1 * time.Second)
@@ -219,7 +259,6 @@ func getForecast() (forecast Forecast, err error) {
 	log.Println("Done.")
 
 	forecast = Forecast{
-		Date:               time.Now().UTC(),
 		ThunderstormAsthma: thunderstormAsthma,
 		Pollen:             pollen,
 	}
