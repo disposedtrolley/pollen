@@ -1,0 +1,16 @@
+services:
+  datasette:
+    image: datasetteproject/datasette
+    ports:
+      - "8001:8001"
+    volumes:
+      - "./data:/mnt"
+    command: datasette -p 8001 -h 0.0.0.0 /mnt/pollen.db
+  pollen:
+    image: disposedtrolley/pollen
+    volumes:
+      - "./data:/mnt"
+    command: ./pollen tick
+    environment:
+      DATABASE_URL: /mnt/pollen.db
+

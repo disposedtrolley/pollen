@@ -10,7 +10,8 @@
 #
 # https://caddyserver.com/docs/caddyfile/concepts#addresses
 gooselabs.co {
-    tls hello@gooselabs.co
+
+	tls hello@gooselabs.co
 
     # Set this path to your site's directory.
     root * /usr/share/caddy
@@ -26,12 +27,7 @@ gooselabs.co {
 
     # Refer to the directive documentation for more options.
     # https://caddyserver.com/docs/caddyfile/directives
-}
 
-melpollen.gooselabs.co {
-    tls hello@gooselabs.co
-
-    reverse_proxy localhost:8001
 }
 
 
